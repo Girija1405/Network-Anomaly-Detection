@@ -1,0 +1,170 @@
+sample_data = {
+    # Sample data for a probing attack scenario
+    'duration': 1000,  # Typically higher duration in DoS attacks due to ongoing flood of packets
+    'protocol_type': 'tcp',  # DoS attacks often use TCP for flooding
+    'service': 'http',  # HTTP service is commonly targeted in DoS attacks
+    'flag': 'SF',  # 'SF' (successful flag) as the attack may still use normal connection flags
+    'src_bytes': 20000,  # Higher source bytes reflecting the volume of attack traffic
+    'dst_bytes': 0,  # Target machine is not sending data back in a flood attack
+    'wrong_fragment': 0,  # DoS doesn't generally manipulate fragments
+    'hot': 0,
+    'logged_in': 1,  # Often the attacker isn't logged in, but can be set to 1 for consistency
+    'num_compromised': 0,
+    'root_shell': 0,
+    'su_attempted': 0,
+    'num_root': 0,
+    'num_file_creations': 0,
+    'num_shells': 0,
+    'num_access_files': 0,
+    'is_host_login': 0,
+    'is_guest_login': 0,
+    'count': 1000,  # A high count reflecting numerous attempts or floods
+    'srv_count': 1000,  # Similar to count, many attempts to overwhelm the server
+    'serror_rate': 0.9,  # A higher error rate due to failed connections
+    'srv_serror_rate': 0.9,  # Similarly high service error rate
+    'rerror_rate': 0.8,  # Elevated remote error rate, as the server may not respond to all packets
+    'srv_rerror_rate': 0.8,  # Service remote error rate will also be high
+    'same_srv_rate': 0.0,  # DoS usually doesn't match existing services
+    'diff_srv_rate': 1.0,  # High difference in services due to repeated flooding
+    'srv_diff_host_rate': 1.0,  # High difference, as DoS doesn't target multiple hosts but floods one
+    'dst_host_count': 1000,  # High count of packets directed to the target host
+    'dst_host_srv_count': 1000,  # The server count will be high due to persistent connection attempts
+    'dst_host_same_srv_rate': 0.0,  # No successful service matches during DoS
+    'dst_host_diff_srv_rate': 1.0,  # High difference in services due to continuous attack traffic
+    'dst_host_same_src_port_rate': 1.0,  # Persistent attacks from the same source port
+    'dst_host_srv_diff_host_rate': 1.0,  # A high rate of different hosts trying to target the server
+    'dst_host_serror_rate': 1.0,  # Frequent server errors due to overwhelming traffic
+    'dst_host_srv_serror_rate': 1.0,  # High service errors
+    'dst_host_rerror_rate': 1.0,  # High remote errors during DoS
+    'dst_host_srv_rerror_rate': 1.0,  # High service remote errors due to the attack
+    'last_flag': 0  # The last flag might still indicate incomplete connections or errors in the attack
+}
+
+sample_data_dos = {
+    # Default sample data with adjustments for DoS attack
+    'duration': 1000,  # Longer duration (DoS attacks can last for a long time)
+    'protocol_type': 'tcp',  # TCP is often used in DoS attacks (e.g., SYN flood)
+    'service': 'http',  # HTTP is often targeted in DoS attacks
+    'flag': 'SF',  # SYN flood flag could indicate a DoS attack
+    'src_bytes': 10000,  # High source byte count (reflects large amount of traffic)
+    'dst_bytes': 0,  # Little to no response (typical of DoS)
+    'wrong_fragment': 0,  # Usually no wrong fragments in a DoS attack
+    'hot': 0,  # Generally 0 for a DoS attack
+    'logged_in': 0,  # No successful logins (DoS attacks don’t involve login)
+    'num_compromised': 0,  # No compromised accounts in DoS attacks
+    'root_shell': 0,  # Root shell would not be part of a DoS attack
+    'su_attempted': 0,  # No su attempts in a DoS attack
+    'num_root': 0,  # No root access in a DoS attack
+    'num_file_creations': 0,  # No file creations involved in a DoS attack
+    'num_shells': 0,  # No shells involved
+    'num_access_files': 0,  # No file access in a DoS attack
+    'is_host_login': 0,  # No login activity
+    'is_guest_login': 0,  # No guest login in a DoS attack
+    'count': 5000,  # Large number of connections (common in DoS)
+    'srv_count': 5000,  # High service request count due to the overwhelming traffic
+    'serror_rate': 0.9,  # High service error rate (reflecting failed requests)
+    'srv_serror_rate': 0.9,  # High service error rate
+    'rerror_rate': 0.8,  # High error rate (due to system overload)
+    'srv_rerror_rate': 0.8,  # High error rate on the server side
+    'same_srv_rate': 0.95,  # A high rate of the same service (attack focused on one service)
+    'diff_srv_rate': 0.05,  # Very low difference in services (mostly attacking the same service)
+    'srv_diff_host_rate': 0.1,  # Some variation, but mostly targeted on the same host
+    'dst_host_count': 1,  # Only one destination host is targeted
+    'dst_host_srv_count': 5000,  # Large number of requests to the destination server
+    'dst_host_same_srv_rate': 0.95,  # High same service rate
+    'dst_host_diff_srv_rate': 0.05,  # Low different services
+    'dst_host_same_src_port_rate': 0.9,  # High rate of same source port (common in SYN flood)
+    'dst_host_srv_diff_host_rate': 0.1,  # Some variation in host rate
+    'dst_host_serror_rate': 0.9,  # High error rate on the destination host
+    'dst_host_srv_serror_rate': 0.9,  # High error rate on the destination service
+    'dst_host_rerror_rate': 0.8,  # High response error rate on the destination host
+    'dst_host_srv_rerror_rate': 0.8,  # High response error rate on the destination service
+    'last_flag': 0  # Typically 0 as DoS doesn't involve a proper session termination
+}
+
+
+sample_data_u2r = {
+    # Sample data for a R2L  attack
+    'duration': 150,  # Duration could vary depending on the attack, typically moderate
+    'protocol_type': 'tcp',  # TCP is often used in this type of attack for exploit communication
+    'service': 'telnet',  # A common service targeted in U2R attacks (can also be other services like ftp)
+    'flag': 'S0',  # Flag can be different depending on the specific attack; 'S0' means no reply received, indicative of scanning or initial stages
+    'src_bytes': 2000,  # Moderate bytes sent by the attacker; buffer overflow attempts can vary but generally require sending data
+    'dst_bytes': 500,  # Some response received from the victim system, but much lower than source bytes in case of U2R
+    'wrong_fragment': 0,  # Typically no fragmentation in U2R attacks
+    'hot': 1,  # "Hot" attribute could be set to 1 if the system is compromised and being used maliciously
+    'logged_in': 1,  # The attacker is logged in as a regular user before trying to escalate to root
+    'num_compromised': 0,  # No other machines are compromised in this case (focused on a single target)
+    'root_shell': 1,  # This flag is set to 1 because the goal of a U2R attack is often to get root access
+    'su_attempted': 1,  # U2R attacks typically involve attempts to elevate privileges (using su or similar methods)
+    'num_root': 1,  # The attacker gains root access or tries to gain root access
+    'num_file_creations': 0,  # File creation is not typical in a U2R attack, but it can happen in some cases
+    'num_shells': 1,  # The attacker might spawn a shell to execute malicious commands
+    'num_access_files': 1,  # The attacker might attempt to access critical system files to further their attack
+    'is_host_login': 0,  # Not related to the host login directly
+    'is_guest_login': 0,  # U2R attacks are typically not guest login-based
+    'count': 10,  # Number of packets sent to the server; could be a moderate number for a U2R attack
+    'srv_count': 10,  # Same count on the server side
+    'serror_rate': 0.2,  # Low service errors expected during exploitation
+    'srv_serror_rate': 0.3,  # Slightly higher service errors as the attack might cause some instability
+    'rerror_rate': 0.0,  # No remote errors typically, as it is an internal exploit
+    'srv_rerror_rate': 0.0,  # No server-side remote errors
+    'same_srv_rate': 0.9,  # The attack is typically targeting the same service (telnet or other)
+    'diff_srv_rate': 0.0,  # No different service requests; this is focused on exploiting one service
+    'srv_diff_host_rate': 0.0,  # No different hosts targeted, as it’s a local escalation attack
+    'dst_host_count': 5,  # Multiple attempts may occur on the target system
+    'dst_host_srv_count': 5,  # Same count of connections on the victim server
+    'dst_host_same_srv_rate': 0.9,  # Most of the packets target the same service (telnet or others)
+    'dst_host_diff_srv_rate': 0.0,  # No variation in services
+    'dst_host_same_src_port_rate': 0.8,  # Same source port might be used in attempts to bypass security measures
+    'dst_host_srv_diff_host_rate': 0.0,  # No difference in target hosts
+    'dst_host_serror_rate': 0.1,  # Low service error rate due to the attack's nature
+    'dst_host_srv_serror_rate': 0.2,  # Slightly higher service error rate on the server side
+    'dst_host_rerror_rate': 0.0,  # No remote errors
+    'dst_host_srv_rerror_rate': 0.0,  # No remote service errors
+    'last_flag': 1  # This could be set to 1 if the attacker is successful, indicating the attack's completion
+}
+
+
+sample_data_u2r = {
+    # Sample data for a U2R (User to Root) attack
+    'duration': 300,  # Longer duration for attacks that involve privilege escalation
+    'protocol_type': 'tcp',  # Protocol type used for exploiting vulnerabilities
+    'service': 'ftp',  # Often, U2R attacks target services like FTP or SSH
+    'flag': 'SF',  # Standard flag for typical U2R attack scenarios
+    'src_bytes': 1200,  # Moderate number of source bytes indicating data transfer during the attack
+    'dst_bytes': 500,  # Some data sent back from the victim system
+    'wrong_fragment': 0,  # Typically, no fragmentation involved in U2R
+    'hot': 0,  # Hot (highly suspicious) ports are not necessarily part of U2R
+    'logged_in': 1,  # Attacker might be logged into the victim system
+    'num_compromised': 1,  # System might be compromised, especially in U2R attacks
+    'root_shell': 1,  # Root shell is usually the goal of a U2R attack
+    'su_attempted': 1,  # The attacker likely attempted to gain superuser privileges
+    'num_root': 1,  # The attacker gained root access
+    'num_file_creations': 3,  # Attackers might create files to exploit the system
+    'num_shells': 1,  # A shell may be invoked to gain control of the system
+    'num_access_files': 5,  # Access to files, especially critical system files
+    'is_host_login': 1,  # Likely a host login scenario for U2R
+    'is_guest_login': 0,  # The attacker is not using guest login in this case
+    'count': 10,  # A higher count might indicate repeated attempts to exploit vulnerabilities
+    'srv_count': 8,  # The attacker might also send a large number of requests to the victim service
+    'serror_rate': 0.2,  # Some service errors expected during exploitation attempts
+    'srv_serror_rate': 0.3,  # Increased service errors on the server side
+    'rerror_rate': 0.1,  # Some remote errors due to the exploitation attempt
+    'srv_rerror_rate': 0.2,  # Slightly increased server-side remote errors
+    'same_srv_rate': 0.5,  # The attacker might try to access the same service multiple times
+    'diff_srv_rate': 0.2,  # Minor difference in the services being targeted
+    'srv_diff_host_rate': 0.1,  # Attack might involve different hosts (targeting multiple systems)
+    'dst_host_count': 3,  # Attacker might target several destination hosts
+    'dst_host_srv_count': 5,  # Multiple service requests sent to the destination hosts
+    'dst_host_same_srv_rate': 0.8,  # The same service is often attacked repeatedly
+    'dst_host_diff_srv_rate': 0.2,  # Some attempts to attack different services
+    'dst_host_same_src_port_rate': 0.9,  # Same source port is used for most requests
+    'dst_host_srv_diff_host_rate': 0.1,  # Less likelihood of attacking different hosts
+    'dst_host_serror_rate': 0.4,  # Service errors expected from the destination system
+    'dst_host_srv_serror_rate': 0.5,  # High service error rate from the destination service
+    'dst_host_rerror_rate': 0.0,  # No remote errors in the destination system
+    'dst_host_srv_rerror_rate': 0.0,  # No remote service errors in the destination system
+    'last_flag': 1  # The last flag is 1 to indicate that the attack has reached its peak (root access achieved)
+}
+
